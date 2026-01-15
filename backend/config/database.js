@@ -13,10 +13,10 @@ const sequelize = new Sequelize(
     logging: false, // Set to console.log to see SQL queries
 
     // this was added for production (down codes) 
-    // SSL configuration for production (PlanetScale requires this)
+    // SSL configuration for production (Aiven requires this)
     dialectOptions: {
       ssl: process.env.NODE_ENV === 'production' ? {
-        rejectUnauthorized: true
+        rejectUnauthorized: false // Aiven uses self-signed certificates
       } : false
     },
      // this was added for production (up codes)
