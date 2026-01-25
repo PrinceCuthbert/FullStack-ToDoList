@@ -3,13 +3,26 @@ const router = express.Router();
 const Task = require('../model/Task');
 
 
+
+
+
 // GET all tasks
 router.get('/', async (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    const listLimit = 20;
+
+    // Validate page number
+    if (page < 1) page = 1;
+
+    const offset = (page - 1) * listLimit;
+
   try {
     const tasks = await Task.findAll({
+      limit: listLimit,
+      offset: offset,
       order: [['createdAt', 'DESC']]
     });
-    res.json(tasks);
+       res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
